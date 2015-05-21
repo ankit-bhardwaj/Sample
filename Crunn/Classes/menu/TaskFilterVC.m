@@ -77,7 +77,7 @@
 {
     UITextField* txt = [[UITextField alloc] initWithFrame:CGRectMake(20, 10, tableView.bounds.size.width-40, 34)];
     txt.background = [[UIImage imageNamed:@"blue_placeholder.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 5, 5) resizingMode:UIImageResizingModeStretch];
-    UIView* v = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 30)];
+    UIView* v = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 34)];
     [v setBackgroundColor:[UIColor clearColor]];
     txt.leftView = v;
     txt.leftViewMode = UITextFieldViewModeAlways;
@@ -137,8 +137,9 @@
     } else {
         _currentInputView = view;
         NSInteger index = view.tag - 1000;
+        CGRect r = [tableView rectForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
         CGRect rect = filteredTableView.frame;
-        rect.origin.y  = index*60 + _currentInputView.frame.size.height;
+        rect.origin.y  = r.origin.y + _currentInputView.frame.size.height - tableView.contentOffset.y + 20;
         [filteredTableView setFrame:rect];
         switch ( index){
             case 2:
@@ -370,9 +371,12 @@
                 NSMutableString* string = [NSMutableString string];
                 for(User* matching in self.selectedAssginee) {
                     [string appendString:matching.FormattedName];
+                    [string appendString:@", "];
                 }
-                NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:16.0]};
-                CGRect size = [string boundingRectWithSize:CGSizeMake(tableView.bounds.size.width-80, FLT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attributes context:nil];
+                NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+                paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+                NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:16.0],NSParagraphStyleAttributeName:paragraphStyle};
+                CGRect size = [string boundingRectWithSize:CGSizeMake(tableView.bounds.size.width-100, FLT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attributes context:nil];
                 return MAX(60.0, size.size.height+30);
             }
             case 3:
@@ -380,9 +384,12 @@
                 NSMutableString* string = [NSMutableString string];
                 for(User* matching in self.selectedCreators) {
                     [string appendString:matching.FormattedName];
+                    [string appendString:@", "];
                 }
-                NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:16.0]};
-                CGRect size = [string boundingRectWithSize:CGSizeMake(tableView.bounds.size.width-80, FLT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attributes context:nil];
+                NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+                paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+                NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:16.0],NSParagraphStyleAttributeName:paragraphStyle};
+                CGRect size = [string boundingRectWithSize:CGSizeMake(tableView.bounds.size.width-100, FLT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attributes context:nil];
                 return MAX(60.0, size.size.height+30);
             }
             case 4:
@@ -390,9 +397,12 @@
                 NSMutableString* string = [NSMutableString string];
                 for(Portfolio* matching in self.selectedPortfolios) {
                     [string appendString:matching.PortfolioName];
+                    [string appendString:@", "];
                 }
-                NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:16.0]};
-                CGRect size = [string boundingRectWithSize:CGSizeMake(tableView.bounds.size.width-80, FLT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attributes context:nil];
+                NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+                paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+                NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:16.0],NSParagraphStyleAttributeName:paragraphStyle};
+                CGRect size = [string boundingRectWithSize:CGSizeMake(tableView.bounds.size.width-100, FLT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attributes context:nil];
                 return MAX(60.0, size.size.height+30);
             }
             case 5:
@@ -400,9 +410,12 @@
                 NSMutableString* string = [NSMutableString string];
                 for(Project* matching in self.selectedProjects) {
                     [string appendString:matching.ProjectName];
+                    [string appendString:@", "];
                 }
-                NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:16.0]};
-                CGRect size = [string boundingRectWithSize:CGSizeMake(tableView.bounds.size.width-80, FLT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attributes context:nil];
+                NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+                paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+                NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:16.0],NSParagraphStyleAttributeName:paragraphStyle};
+                CGRect size = [string boundingRectWithSize:CGSizeMake(tableView.bounds.size.width-100, FLT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attributes context:nil];
                 return MAX(60.0, size.size.height+30);
             }
         }
@@ -471,10 +484,13 @@
                 NSMutableString* string = [NSMutableString string];
                 for(User* matching in self.selectedAssginee) {
                     [string appendString:matching.FormattedName];
+                    [string appendString:@", "];
                     CLToken *match = [[CLToken alloc] initWithDisplayText:matching.FormattedName context:matching];
                     [txt addToken:match];
                 }
-                NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:16.0]};
+                NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+                paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+                NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:16.0],NSParagraphStyleAttributeName:paragraphStyle};
                 CGRect size = [string boundingRectWithSize:CGSizeMake(rect.size.width, FLT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attributes context:nil];
                 rect.size.height = MAX(34, size.size.height);
                 [txt setFrame:rect];
@@ -490,10 +506,13 @@
                 NSMutableString* string = [NSMutableString string];
                 for(User* matching in self.selectedCreators) {
                     [string appendString:matching.FormattedName];
+                    [string appendString:@", "];
                     CLToken *match = [[CLToken alloc] initWithDisplayText:matching.FormattedName context:matching];
                     [txt addToken:match];
                 }
-                NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:16.0]};
+                NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+                paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+                NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:16.0],NSParagraphStyleAttributeName:paragraphStyle};
                 CGRect size = [string boundingRectWithSize:CGSizeMake(rect.size.width, FLT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attributes context:nil];
                 rect.size.height = MAX(34, size.size.height);
                 [txt setFrame:rect];
@@ -509,10 +528,13 @@
                 NSMutableString* string = [NSMutableString string];
                 for(Portfolio* matching in self.selectedPortfolios) {
                     [string appendString:matching.PortfolioName];
+                    [string appendString:@", "];
                     CLToken *match = [[CLToken alloc] initWithDisplayText:matching.PortfolioName context:matching];
                     [txt addToken:match];
                 }
-                NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:16.0]};
+                NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+                paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+                NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:16.0],NSParagraphStyleAttributeName:paragraphStyle};
                 CGRect size = [string boundingRectWithSize:CGSizeMake(rect.size.width, FLT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attributes context:nil];
                 rect.size.height = MAX(34, size.size.height);
                 [txt setFrame:rect];
@@ -528,10 +550,13 @@
                 NSMutableString* string = [NSMutableString string];
                 for(Project* matching in self.selectedProjects) {
                     [string appendString:matching.ProjectName];
+                    [string appendString:@", "];
                     CLToken *match = [[CLToken alloc] initWithDisplayText:matching.ProjectName context:matching];
                     [txt addToken:match];
                 }
-                NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:16.0]};
+                NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+                paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+                NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:16.0],NSParagraphStyleAttributeName:paragraphStyle};
                 CGRect size = [string boundingRectWithSize:CGSizeMake(rect.size.width, FLT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attributes context:nil];
                 rect.size.height = MAX(34, size.size.height);
                 [txt setFrame:rect];                txt.tag = 1000+indexPath.row;
@@ -551,7 +576,6 @@
         }
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.backgroundColor = [UIColor lightGrayColor];
         return cell;
     }
     else

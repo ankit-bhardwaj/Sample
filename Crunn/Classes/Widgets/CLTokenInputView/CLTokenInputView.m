@@ -16,7 +16,7 @@ static CGFloat const TEXT_FIELD_HSPACE = 0.0; // Note: Same as CLTokenView.PADDI
 static CGFloat const VSPACE = 0.0;
 static CGFloat const MINIMUM_TEXTFIELD_WIDTH = 56.0;
 static CGFloat const PADDING_TOP = 0.0;
-static CGFloat const PADDING_BOTTOM = 8.0;
+static CGFloat const PADDING_BOTTOM = 0.0;
 static CGFloat const PADDING_LEFT = 0.0;
 static CGFloat const PADDING_RIGHT = 0.0;
 static CGFloat const STANDARD_ROW_HEIGHT = 25.0;
@@ -210,7 +210,6 @@ static CGFloat const FIELD_MARGIN_X = 4.0; // Note: Same as CLTokenView.PADDING_
         fieldViewRect.origin.x = curX + FIELD_MARGIN_X;
         fieldViewRect.origin.y = curY + ((STANDARD_ROW_HEIGHT - CGRectGetHeight(fieldViewRect))/2.0);
         self.fieldView.frame = fieldViewRect;
-        self.fieldView.backgroundColor = [UIColor redColor];
         curX = CGRectGetMaxX(fieldViewRect) + FIELD_MARGIN_X;
     }
 
@@ -284,7 +283,7 @@ static CGFloat const FIELD_MARGIN_X = 4.0; // Note: Same as CLTokenView.PADDING_
     [self setFrame:r];
 
     CGRect rect = self.bottomImageView.frame;
-    rect.size.height = self.intrinsicContentSize.height-10;
+    rect.size.height = self.intrinsicContentSize.height;
     self.bottomImageView.frame =rect;
     
     if (oldContentHeight != self.intrinsicContentHeight) {
