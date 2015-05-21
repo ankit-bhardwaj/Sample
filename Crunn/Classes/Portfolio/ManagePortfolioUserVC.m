@@ -683,8 +683,9 @@
 
 - (void)openAddressBook
 {
-    if(ABAddressBookGetAuthorizationStatus() != kABAuthorizationStatusAuthorized)
+    if(![AuthorizationStatus isAddressbookAllowedWithMessage:YES])
         return;
+    
     ABPeoplePickerNavigationController *picker = [[ABPeoplePickerNavigationController alloc] init];
     picker.displayedProperties = [NSArray arrayWithObject:[NSNumber numberWithInt:kABPersonEmailProperty]];
     [picker setPeoplePickerDelegate:self];

@@ -19,6 +19,7 @@
 #import "UIDevice+UDID.h"
 #import "LocationService.h"
 #import "UIView+Toast.h"
+#import "AuthorizationStatus.h"
 
 #endif
 

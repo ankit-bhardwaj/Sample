@@ -480,27 +480,28 @@
 
 - (void)openAddressBook
 {
-    if(ABAddressBookGetAuthorizationStatus() != kABAuthorizationStatusAuthorized)
-        return;
-    ABPeoplePickerNavigationController *picker = [[ABPeoplePickerNavigationController alloc] init];
-    picker.displayedProperties = [NSArray arrayWithObject:[NSNumber numberWithInt:kABPersonEmailProperty]];
-    [picker setPeoplePickerDelegate:self];
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8")) {
-        picker.predicateForSelectionOfPerson = [NSPredicate predicateWithFormat:@"%K.@count <= 1", ABPersonEmailAddressesProperty];
+    if([AuthorizationStatus isAddressbookAllowedWithMessage:YES])
+    {
+        ABPeoplePickerNavigationController *picker = [[ABPeoplePickerNavigationController alloc] init];
+        picker.displayedProperties = [NSArray arrayWithObject:[NSNumber numberWithInt:kABPersonEmailProperty]];
+        [picker setPeoplePickerDelegate:self];
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8")) {
+            picker.predicateForSelectionOfPerson = [NSPredicate predicateWithFormat:@"%K.@count <= 1", ABPersonEmailAddressesProperty];
+        }
+        
+        //    if ([picker.navigationBar respondsToSelector:@selector(setBarTintColor:)]) {
+        //        [[UINavigationBar appearanceWhenContainedIn:[ABPeoplePickerNavigationController class], nil] setBarTintColor:[[SkinDocument sharedInstance] getSkinColorForIdentifier:kSkinNavBarTintColor]];
+        //
+        //        [[UINavigationBar appearanceWhenContainedIn:[ABPeoplePickerNavigationController class], nil] setTintColor:[[SkinDocument sharedInstance] getSkinColorForIdentifier:kSkinNavTintColor]];
+        //    }
+        //    else
+        //        [[UINavigationBar appearanceWhenContainedIn:[ABPeoplePickerNavigationController class], nil] setTintColor:[[SkinDocument sharedInstance] getSkinColorForIdentifier:kSkinNavTintColor]];
+        
+        [[UINavigationBar appearanceWhenContainedIn:[ABPeoplePickerNavigationController class], nil] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+        
+        [self presentViewController:picker animated:YES completion:^{
+        }];
     }
-    
-    //    if ([picker.navigationBar respondsToSelector:@selector(setBarTintColor:)]) {
-    //        [[UINavigationBar appearanceWhenContainedIn:[ABPeoplePickerNavigationController class], nil] setBarTintColor:[[SkinDocument sharedInstance] getSkinColorForIdentifier:kSkinNavBarTintColor]];
-    //
-    //        [[UINavigationBar appearanceWhenContainedIn:[ABPeoplePickerNavigationController class], nil] setTintColor:[[SkinDocument sharedInstance] getSkinColorForIdentifier:kSkinNavTintColor]];
-    //    }
-    //    else
-    //        [[UINavigationBar appearanceWhenContainedIn:[ABPeoplePickerNavigationController class], nil] setTintColor:[[SkinDocument sharedInstance] getSkinColorForIdentifier:kSkinNavTintColor]];
-    
-    [[UINavigationBar appearanceWhenContainedIn:[ABPeoplePickerNavigationController class], nil] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    
-    [self presentViewController:picker animated:YES completion:^{
-    }];
 }
 
 #pragma mark -

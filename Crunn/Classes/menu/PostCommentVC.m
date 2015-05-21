@@ -256,11 +256,13 @@
     switch ([buttonIndex integerValue]) {
             
         case 0:{
-            
+            if([AuthorizationStatus isPhotoAlbumAllowedWithMessage:YES])
+            {
             [picker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
             [self presentViewController:picker animated:YES completion:^{
                 
             }];
+            }
             
             
         }
@@ -268,39 +270,46 @@
             
         case 1:{
             
-            if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+            if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] && [AuthorizationStatus isCameraAllowedWithMessage:YES])
             {
                 [picker setSourceType:UIImagePickerControllerSourceTypeCamera];
                 picker.mediaTypes = [NSArray arrayWithObject:(NSString *)kUTTypeImage];
                 [picker setCameraCaptureMode:UIImagePickerControllerCameraCaptureModePhoto];
+                [self presentViewController:picker animated:YES completion:^{
+                    
+                }];
                 
             }
-            else{
+            else if([AuthorizationStatus isPhotoAlbumAllowedWithMessage:YES]){
                 [picker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+                [self presentViewController:picker animated:YES completion:^{
+                    
+                }];
             }
             // objc_setAssociatedObject(picker, "injurybtn", sender, OBJC_ASSOCIATION_ASSIGN);
-            [self presentViewController:picker animated:YES completion:^{
-                
-            }];
+            
             
         }
             break;
             
         case 2:{
-            if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+            if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] && [AuthorizationStatus isCameraAllowedWithMessage:YES])
             {
                 [picker setSourceType:UIImagePickerControllerSourceTypeCamera];
                 picker.mediaTypes = [NSArray arrayWithObject:(NSString *)kUTTypeMovie];
                 [picker setCameraCaptureMode:UIImagePickerControllerCameraCaptureModeVideo];
-                
+                [self presentViewController:picker animated:YES completion:^{
+                    
+                }];
             }
-            else{
+            else if([AuthorizationStatus isPhotoAlbumAllowedWithMessage:YES]){
                 [picker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+                [self presentViewController:picker animated:YES completion:^{
+                    
+                }];
             }
             // objc_setAssociatedObject(picker, "injurybtn", sender, OBJC_ASSOCIATION_ASSIGN);
-            [self presentViewController:picker animated:YES completion:^{
-                
-            }];
+           
             
             
         }

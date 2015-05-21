@@ -170,6 +170,8 @@ static void DeriveBufferSize (AudioQueueRef audioQueue, AudioStreamBasicDescript
 
 - (void)beginRecording {
     @synchronized(self) {
+        if([AuthorizationStatus isMicroPhoneAllowedWithMessage:YES])
+        {
         if (!self.recording && !processing) {
             aqData.mCurrentPacket = 0;
             aqData.mIsRunning = true;
@@ -182,6 +184,7 @@ static void DeriveBufferSize (AudioQueueRef audioQueue, AudioStreamBasicDescript
                 [status show];
             }
             meterTimer = [[NSTimer scheduledTimerWithTimeInterval:kVolumeSamplingInterval target:self selector:@selector(checkMeter) userInfo:nil repeats:YES] retain];
+        }
         }
     }
 }

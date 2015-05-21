@@ -745,20 +745,23 @@
             
         case 0:{
             
-            [picker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
-            if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+            if([AuthorizationStatus isPhotoAlbumAllowedWithMessage:YES])
             {
-                [self presentViewController:picker animated:YES completion:^{
-                    
-                }];
-            }
-            else
-            {
-                imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:picker];
-                [imagePickerPopover setPopoverContentSize:CGSizeMake(320, 480)];
-                CGRect rect = attachFileBtn.frame;
-                rect.origin.y += 60;
-                [imagePickerPopover presentPopoverFromRect:rect inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+                [picker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+                if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+                {
+                    [self presentViewController:picker animated:YES completion:^{
+                        
+                    }];
+                }
+                else
+                {
+                    imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:picker];
+                    [imagePickerPopover setPopoverContentSize:CGSizeMake(320, 480)];
+                    CGRect rect = attachFileBtn.frame;
+                    rect.origin.y += 60;
+                    [imagePickerPopover presentPopoverFromRect:rect inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+                }
             }
         
         
@@ -767,7 +770,7 @@
             
         case 1:{
             
-            if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+            if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] && [AuthorizationStatus isCameraAllowedWithMessage:YES])
             {
                 [picker setSourceType:UIImagePickerControllerSourceTypeCamera];
                 picker.mediaTypes = [NSArray arrayWithObject:(NSString *)kUTTypeImage];
@@ -776,8 +779,9 @@
                     
                 }];
             }
-            else
+            else if([AuthorizationStatus isPhotoAlbumAllowedWithMessage:YES])
             {
+                
                 [picker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
                 if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
                 {
@@ -800,7 +804,7 @@
             break;
             
         case 2:{
-                if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+                if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] && [AuthorizationStatus isCameraAllowedWithMessage:YES])
             {
                 [picker setSourceType:UIImagePickerControllerSourceTypeCamera];
                 picker.mediaTypes = [NSArray arrayWithObject:(NSString *)kUTTypeMovie];
@@ -810,7 +814,7 @@
                 }];
                 
             }
-            else
+            else if([AuthorizationStatus isPhotoAlbumAllowedWithMessage:YES])
             {
                 [picker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
                 if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)

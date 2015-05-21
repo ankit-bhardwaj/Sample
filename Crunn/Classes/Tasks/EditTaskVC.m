@@ -917,7 +917,8 @@
     switch ([buttonIndex integerValue]) {
             
         case 0:{
-            
+            if([AuthorizationStatus isPhotoAlbumAllowedWithMessage:YES])
+            {
             [picker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
             if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
             {
@@ -933,6 +934,7 @@
                 rect.origin.y += 60;
                 [imagePickerPopover presentPopoverFromRect:rect inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
             }
+            }
             
             
         }
@@ -940,7 +942,7 @@
             
         case 1:{
             
-            if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+            if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] && [AuthorizationStatus isCameraAllowedWithMessage:YES])
             {
                 [picker setSourceType:UIImagePickerControllerSourceTypeCamera];
                 picker.mediaTypes = [NSArray arrayWithObject:(NSString *)kUTTypeImage];
@@ -949,7 +951,7 @@
                     
                 }];
             }
-            else
+            else if([AuthorizationStatus isPhotoAlbumAllowedWithMessage:YES])
             {
                 [picker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
                 if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
@@ -973,7 +975,7 @@
             break;
             
         case 2:{
-            if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+            if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] && [AuthorizationStatus isCameraAllowedWithMessage:YES])
             {
                 [picker setSourceType:UIImagePickerControllerSourceTypeCamera];
                 picker.mediaTypes = [NSArray arrayWithObject:(NSString *)kUTTypeMovie];
@@ -983,7 +985,7 @@
                 }];
                 
             }
-            else
+            else if([AuthorizationStatus isPhotoAlbumAllowedWithMessage:YES])
             {
                 [picker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
                 if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)

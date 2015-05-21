@@ -356,48 +356,56 @@
     switch ([buttonIndex integerValue]) {
             
         case 0:{
-            
-            [picker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
-            [(UIViewController*)self.target presentViewController:picker animated:YES completion:^{
+            if([AuthorizationStatus isPhotoAlbumAllowedWithMessage:YES])
+            {
+                [picker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+                [(UIViewController*)self.target presentViewController:picker animated:YES completion:^{
                 
-            }];
-            
+                }];
+            }
             
         }
             break;
             
         case 1:{
             
-            if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+            if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] && [AuthorizationStatus isCameraAllowedWithMessage:YES])
             {
                 [picker setSourceType:UIImagePickerControllerSourceTypeCamera];
                 picker.mediaTypes = [NSArray arrayWithObject:(NSString *)kUTTypeImage];
                 [picker setCameraCaptureMode:UIImagePickerControllerCameraCaptureModePhoto];
+                [(UIViewController*)self.target presentViewController:picker animated:YES completion:^{
+                    
+                }];
             }
-            else{
+            else if([AuthorizationStatus isPhotoAlbumAllowedWithMessage:YES]){
                 [picker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+                [(UIViewController*)self.target presentViewController:picker animated:YES completion:^{
+                    
+                }];
             }
-            [(UIViewController*)self.target presentViewController:picker animated:YES completion:^{
-                
-            }];
+            
             
         }
             break;
             
         case 2:{
-            if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+            if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] && [AuthorizationStatus isCameraAllowedWithMessage:YES])
             {
                 [picker setSourceType:UIImagePickerControllerSourceTypeCamera];
                 picker.mediaTypes = [NSArray arrayWithObject:(NSString *)kUTTypeMovie];
                 [picker setCameraCaptureMode:UIImagePickerControllerCameraCaptureModeVideo];
-                
+                [(UIViewController*)self.target presentViewController:picker animated:YES completion:^{
+                    
+                }];
             }
-            else{
+            else if([AuthorizationStatus isPhotoAlbumAllowedWithMessage:YES]){
                 [picker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+                [(UIViewController*)self.target presentViewController:picker animated:YES completion:^{
+                    
+                }];
             }
-            [(UIViewController*)self.target presentViewController:picker animated:YES completion:^{
-                
-            }];
+           
             
             
         }

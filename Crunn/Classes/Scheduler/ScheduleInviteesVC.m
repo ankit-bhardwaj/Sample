@@ -113,6 +113,8 @@
 
 - (void)toggleContacts:(UISegmentedControl*)seg
 {
+    if(segment.selectedSegmentIndex == 1)
+        [AuthorizationStatus isAddressbookAllowedWithMessage:YES];
     if(phoneContacts.count == 0)
         [phoneContacts addObjectsFromArray:[[TaskDocument sharedInstance] allABContacts]];
     [self.tableView reloadData];
@@ -435,8 +437,9 @@
 
 - (void)openAddressBook
 {
-    if(ABAddressBookGetAuthorizationStatus() != kABAuthorizationStatusAuthorized)
+    if(![AuthorizationStatus isAddressbookAllowedWithMessage:YES])
         return;
+    
     ABPeoplePickerNavigationController *picker = [[ABPeoplePickerNavigationController alloc] init];
     picker.displayedProperties = [NSArray arrayWithObject:[NSNumber numberWithInt:kABPersonEmailProperty]];
     [picker setPeoplePickerDelegate:self];

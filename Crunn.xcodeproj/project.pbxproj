@@ -770,6 +770,8 @@
 		A00C915E1A605AFC008A8821 /* ScheduleMeetingStepOneVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A00C915A1A605AFC008A8821 /* ScheduleMeetingStepOneVC.xib */; };
 		A00C91631A615942008A8821 /* ScheduleNavigationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A00C91601A615942008A8821 /* ScheduleNavigationVC.m */; };
 		A00C91651A615942008A8821 /* ScheduleNavigationVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A00C91611A615942008A8821 /* ScheduleNavigationVC.xib */; };
+		A010A49E1AF0577600370238 /* AuthorizationStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = A010A49D1AF0577600370238 /* AuthorizationStatus.m */; };
+		A010A49F1AF0577600370238 /* AuthorizationStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = A010A49D1AF0577600370238 /* AuthorizationStatus.m */; };
 		A01E833A19B95D8900324358 /* UINavigationController+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = A01E833819B95D8900324358 /* UINavigationController+Category.m */; };
 		A0270D9E1AD3495D00805CC3 /* PortfolioDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A0270D9C1AD3495D00805CC3 /* PortfolioDetailVC.m */; };
 		A0270D9F1AD3495D00805CC3 /* PortfolioDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A0270D9C1AD3495D00805CC3 /* PortfolioDetailVC.m */; };
@@ -1189,6 +1191,8 @@
 		A00C915F1A615942008A8821 /* ScheduleNavigationVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScheduleNavigationVC.h; sourceTree = "<group>"; };
 		A00C91601A615942008A8821 /* ScheduleNavigationVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScheduleNavigationVC.m; sourceTree = "<group>"; };
 		A00C91611A615942008A8821 /* ScheduleNavigationVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScheduleNavigationVC.xib; sourceTree = "<group>"; };
+		A010A49C1AF0577600370238 /* AuthorizationStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthorizationStatus.h; sourceTree = "<group>"; };
+		A010A49D1AF0577600370238 /* AuthorizationStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthorizationStatus.m; sourceTree = "<group>"; };
 		A01E833719B95D8900324358 /* UINavigationController+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationController+Category.h"; path = "Category/UINavigationController+Category.h"; sourceTree = "<group>"; };
 		A01E833819B95D8900324358 /* UINavigationController+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UINavigationController+Category.m"; path = "Category/UINavigationController+Category.m"; sourceTree = "<group>"; };
 		A02321D8196701E9004B65D6 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
@@ -1465,12 +1469,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				861D97151ABFEA860039503C /* AVFoundation.framework in Frameworks */,
+				861D97201ABFEA860039503C /* AssetsLibrary.framework in Frameworks */,
 				8670E2BF1AC1B1830098CEF8 /* MapKit.framework in Frameworks */,
 				861D97121ABFEA860039503C /* AddressBookUI.framework in Frameworks */,
 				86AF9A741AC94C5B0087E3FB /* DBChooser.framework in Frameworks */,
 				861D97131ABFEA860039503C /* AddressBook.framework in Frameworks */,
 				861D97141ABFEA860039503C /* libKal.a in Frameworks */,
-				861D97151ABFEA860039503C /* AVFoundation.framework in Frameworks */,
 				861D97161ABFEA860039503C /* SystemConfiguration.framework in Frameworks */,
 				861D97171ABFEA860039503C /* MobileCoreServices.framework in Frameworks */,
 				861D97181ABFEA860039503C /* MessageUI.framework in Frameworks */,
@@ -1481,7 +1486,6 @@
 				861D971D1ABFEA860039503C /* Crashlytics.framework in Frameworks */,
 				861D971E1ABFEA860039503C /* CoreGraphics.framework in Frameworks */,
 				861D971F1ABFEA860039503C /* CrashReporter.framework in Frameworks */,
-				861D97201ABFEA860039503C /* AssetsLibrary.framework in Frameworks */,
 				861D97211ABFEA860039503C /* Speex.framework in Frameworks */,
 				861D97221ABFEA860039503C /* CoreData.framework in Frameworks */,
 				861D97231ABFEA860039503C /* UIKit.framework in Frameworks */,
@@ -1784,6 +1788,8 @@
 				86B653AF1AC12E7C007AA992 /* MapVC.h */,
 				86B653B01AC12E7C007AA992 /* MapVC.m */,
 				86B653B11AC12E7C007AA992 /* MapVC.xib */,
+				A010A49C1AF0577600370238 /* AuthorizationStatus.h */,
+				A010A49D1AF0577600370238 /* AuthorizationStatus.m */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -3041,6 +3047,7 @@
 				861D96931ABFEA860039503C /* AuthenticatedURLConnectionOp.m in Sources */,
 				861D96941ABFEA860039503C /* SWTableViewCell.m in Sources */,
 				861D96951ABFEA860039503C /* Crunn.xcdatamodeld in Sources */,
+				A010A49F1AF0577600370238 /* AuthorizationStatus.m in Sources */,
 				861D96961ABFEA860039503C /* UIViewController+MMDrawerController.m in Sources */,
 				861D96971ABFEA860039503C /* HPTextViewInternal.m in Sources */,
 				861D96981ABFEA860039503C /* MMDrawerVisualState.m in Sources */,
@@ -3189,6 +3196,7 @@
 				868B83F9198B763C00D98FFF /* AuthenticatedURLConnectionOp.m in Sources */,
 				86D309821ABABFFB0084F1C5 /* SWTableViewCell.m in Sources */,
 				868B83FA198B763C00D98FFF /* Crunn.xcdatamodeld in Sources */,
+				A010A49E1AF0577600370238 /* AuthorizationStatus.m in Sources */,
 				868B83FB198B763C00D98FFF /* UIViewController+MMDrawerController.m in Sources */,
 				868B83FC198B763C00D98FFF /* HPTextViewInternal.m in Sources */,
 				868B83FD198B763C00D98FFF /* MMDrawerVisualState.m in Sources */,
