@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MyTaskVC">
+            <connections>
+                <outlet property="expandCollaspeBtn" destination="rE6-rF-LTg" id="M8Q-01-uOm"/>
+                <outlet property="filterTaskDoneBtn" destination="6QT-iF-KZ4" id="AoB-4i-dNk"/>
+                <outlet property="sortCategoryBtn" destination="mIf-sH-flx" id="uFT-w0-gX2"/>
+                <outlet property="taskName" destination="Cal-2Q-mKt" id="80E-23-j0U"/>
+                <outlet property="taskNameActivity" destination="NtQ-Qc-fTI" id="itT-f9-jXc"/>
+                <outlet property="taskNameMic" destination="VZ0-DW-mX0" id="3KP-dA-q8w"/>
+                <outlet property="tblView" destination="xkd-7b-DKj" id="GpS-IC-kPQ"/>
+                <outlet property="titleLabel" destination="kl7-pY-hu3" id="Caw-0q-NlF"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="436"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="xkd-7b-DKj" customClass="BVReorderTableView">
+                    <rect key="frame" x="10" y="93" width="300" height="343"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <inset key="insetFor6xAndEarlier" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                    <color key="separatorColor" red="0.85050500690607733" green="0.85050500690607733" blue="0.85050500690607733" alpha="1" colorSpace="calibratedRGB"/>
+                    <inset key="separatorInset" minX="7" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="Nb7-4W-POP"/>
+                        <outlet property="delegate" destination="-1" id="48G-dy-IxP"/>
+                    </connections>
+                </tableView>
+                <view contentMode="scaleToFill" id="Xl8-ZV-y0u">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="45"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleAspectFit" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="rE6-rF-LTg">
+                            <rect key="frame" x="266" y="2" width="40" height="40"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                            <state key="normal" image="home_collapse.png">
+                                <color key="titleColor" red="0.11372549830000001" green="0.60000002379999995" blue="0.79215693470000004" alpha="1" colorSpace="deviceRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="disabled">
+                                <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="selected" image="home_expand.png">
+                                <color key="titleColor" red="0.11372549830000001" green="0.60000002379999995" blue="0.79215693470000004" alpha="1" colorSpace="deviceRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="toggleCollaspeExpandAction:" destination="-1" eventType="touchUpInside" id="Cv6-Z2-fQG"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="mIf-sH-flx">
+                            <rect key="frame" x="223" y="2" width="40" height="40"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                            <state key="normal" image="home_sortBy.png">
+                                <color key="titleColor" red="0.11372549830000001" green="0.60000002379999995" blue="0.79215693470000004" alpha="1" colorSpace="deviceRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="disabled">
+                                <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="showSortCategory:" destination="-1" eventType="touchUpInside" id="IKf-G1-qEf"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="6QT-iF-KZ4">
+                            <rect key="frame" x="182" y="2" width="40" height="40"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                            <state key="normal" image="home_unselelected_check.png">
+                                <color key="titleColor" red="0.11372549830000001" green="0.60000002379999995" blue="0.79215693470000004" alpha="1" colorSpace="deviceRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="disabled">
+                                <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="selected" image="home_selelected_check.png"/>
+                            <connections>
+                                <action selector="filterTaskDoneAction:" destination="-1" eventType="touchUpInside" id="7p2-Te-A7N"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" id="kl7-pY-hu3">
+                            <rect key="frame" x="7" y="11" width="166" height="24"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="14"/>
+                            <color key="textColor" red="0.18431372940540314" green="0.7137255072593689" blue="0.90980398654937744" alpha="1" colorSpace="deviceRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" id="Iac-qB-ULt">
+                    <rect key="frame" x="10" y="52" width="300" height="42"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="VZ0-DW-mX0">
+                            <rect key="frame" x="266" y="6" width="31" height="31"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            <state key="normal" image="icon_Speak.png">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="selected" image="post_arrow.png"/>
+                            <connections>
+                                <action selector="taskSpeackAction:" destination="-1" eventType="touchUpInside" id="5er-A7-pGd"/>
+                            </connections>
+                        </button>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Give your task a title..." clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" id="Cal-2Q-mKt">
+                            <rect key="frame" x="5" y="6" width="259" height="30"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="mfF-Ry-0gH"/>
+                            </connections>
+                        </textField>
+                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" id="NtQ-Qc-fTI">
+                            <rect key="frame" x="271" y="11" width="20" height="20"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </activityIndicatorView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.88" alpha="1" colorSpace="calibratedWhite"/>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="home_collapse.png" width="28" height="28"/>
+        <image name="home_expand.png" width="28" height="28"/>
+        <image name="home_selelected_check.png" width="28" height="25"/>
+        <image name="home_sortBy.png" width="36" height="24"/>
+        <image name="home_unselelected_check.png" width="28" height="25"/>
+        <image name="icon_Speak.png" width="24" height="24"/>
+        <image name="post_arrow.png" width="24" height="24"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

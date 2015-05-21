@@ -1,0 +1,76 @@
+//
+//  Prefix header
+//
+//  The contents of this file are implicitly included at the beginning of every source file.
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_3_0
+#warning "This project uses features only available in iOS SDK 3.0 and later."
+#endif
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+    #import <CoreData/CoreData.h>
+    #import "AppDelegate.h"
+#include <objc/runtime.h>
+#import "UIDevice+UDID.h"
+#import "LocationService.h"
+#import "UIView+Toast.h"
+
+#endif
+
+#define GOOGLE_SPEECH_TO_TEXT_KEY @"AIzaSyBiE8w_ggAgLefKtXn38TS8vS8mSgNj4dI"
+#define APP_KEY [[NSBundle mainBundle] bundleIdentifier]
+#define SESSION_KEY [[UIDevice currentDevice] getDeviceUniqueKey]
+
+
+#if GRAPPLE
+
+#define BASE_SERVER_PATH PROD_SERVER_PATH
+
+#define BASE_FILE_PATH PROD_FILE_PATH
+
+#else
+
+#define BASE_SERVER_PATH ([[NSUserDefaults standardUserDefaults] boolForKey:@"production"])?PROD_SERVER_PATH:DEV_SERVER_PATH
+
+#define BASE_FILE_PATH ([[NSUserDefaults standardUserDefaults] boolForKey:@"production"])?PROD_FILE_PATH:DEV_FILE_PATH
+
+#endif
+
+#define PROD_SERVER_PATH @"http://app.grapple.co/Service/v2.3"
+#define PROD_FILE_PATH @"http://app.grapple.co"
+
+//#define DEV_SERVER_PATH @"http://cruundev02.cruun.com:8091/Service1"
+//#define DEV_FILE_PATH @"http://cruundev02.cruun.com:8091"
+
+#define DEV_SERVER_PATH @"http://dev.cruun.com:8091/Service"
+#define DEV_FILE_PATH @"http://dev.cruun.com:8091"
+
+
+
+#define APPDELEGATE (AppDelegate*)[UIApplication sharedApplication].delegate
+
+#define NSNUMBER_IS_NONZERO(_x) ( ((_x) != nil) && ([(_x) floatValue] != 0.0) )
+
+#define IF_STRING_HAS_DATA(_x) if ( ((_x) != nil) && ( [(_x) length] > 0 ) )
+
+#define NSSTRING_HAS_DATA(_x) ( ((_x) != nil) && ( [(_x) length] > 0 ) )
+
+#define NSSTRING_NOT_NSNULL(_x) ( ( ((_x) != nil) && (_x) != [NSNull null] ) ? (_x) : nil )
+
+#define NSTYPE_IS_VALID( _x, _y)  (((_x != nil) && [_x isKindOfClass:_y]))
+
+#define NS_NOT_NULL(_x) ([(_x) isKindOfClass:[NSNull class]]) ? nil : (_x)
+
+#define DOCUMENTS_FOLDER [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"]
+
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+#define IS_IPAD (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+
+#define CREATETASK_ATTACHMENTS  [DOCUMENTS_FOLDER stringByAppendingPathComponent:@"Createtaskattachment"]
+#define CREATE_HOME_COMMENT_ATTACHMENTS  [DOCUMENTS_FOLDER stringByAppendingPathComponent:@"HomeComment"]
+#define DEVICE_IS_TABLET ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)

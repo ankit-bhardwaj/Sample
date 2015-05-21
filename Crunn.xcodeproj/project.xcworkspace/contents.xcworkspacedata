@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <Group
+      location = "absolute:"
+      name = "New Group">
+      <FileRef
+         location = "self:Crunn.xcodeproj">
+      </FileRef>
+   </Group>
+</Workspace>

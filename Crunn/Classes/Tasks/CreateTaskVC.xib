@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CreateTaskVC">
+            <connections>
+                <outlet property="attachFileBtn" destination="OdR-IH-ggM" id="Xjr-qJ-aow"/>
+                <outlet property="attachmentsContainer" destination="0ig-xl-6l2" id="M5g-n9-IQE"/>
+                <outlet property="fotterContentView" destination="EO1-qG-1xr" id="5Fq-ZZ-fqZ"/>
+                <outlet property="prioritySwitch" destination="q66-zV-uMF" id="6NM-4X-uX8"/>
+                <outlet property="reminderBtn" destination="ysB-1F-67d" id="ylT-mG-lOA"/>
+                <outlet property="reminderCrossBtn" destination="HnU-SA-CTO" id="kqO-XA-2P5"/>
+                <outlet property="scrollView" destination="5Ed-Mu-oAm" id="dcV-cN-NMe"/>
+                <outlet property="taskName" destination="MaY-KR-pdV" id="gwY-8T-0By"/>
+                <outlet property="taskNameActivity" destination="9yV-aR-Lj1" id="LhW-7g-xoA"/>
+                <outlet property="taskNameMic" destination="6ed-Wv-JdZ" id="MW9-Je-SBb"/>
+                <outlet property="taskSummary" destination="yrI-QT-q91" id="GZR-zD-qeD"/>
+                <outlet property="taskSummaryActivity" destination="zpK-AF-Ixq" id="O23-1o-4ZU"/>
+                <outlet property="taskSummaryMic" destination="jhY-rS-5a9" id="pCa-1o-e53"/>
+                <outlet property="tbView" destination="ood-bh-sQX" id="QHy-sN-QjJ"/>
+                <outlet property="textViewPlacehoder" destination="aex-51-MOJ" id="Rgy-9q-sar"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="5Ed-Mu-oAm" customClass="TPKeyboardAvoidingScrollView">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="High Priority" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bM7-8o-Iad">
+                            <rect key="frame" x="222" y="213" width="83" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                            <color key="textColor" red="0.11372549830000001" green="0.54509806630000002" blue="0.78431379800000001" alpha="1" colorSpace="deviceRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Give your task a title..." minimumFontSize="17" id="MaY-KR-pdV">
+                            <rect key="frame" x="10" y="22" width="271" height="30"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="R8A-h1-TpX"/>
+                            </connections>
+                        </textField>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="OdR-IH-ggM">
+                            <rect key="frame" x="10" y="206" width="114" height="35"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                            <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="Attach a file" image="task_Attachment.png">
+                                <color key="titleColor" red="0.11372549830000001" green="0.60000002379999995" blue="0.79215693470000004" alpha="1" colorSpace="deviceRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="attachmentAction:" destination="-1" eventType="touchUpInside" id="NE4-TE-f3F"/>
+                            </connections>
+                        </button>
+                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="q66-zV-uMF">
+                            <rect key="frame" x="171" y="208" width="51" height="31"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                            <connections>
+                                <action selector="priorityAction:" destination="-1" eventType="valueChanged" id="NRK-U5-9O1"/>
+                            </connections>
+                        </switch>
+                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="0ig-xl-6l2">
+                            <rect key="frame" x="0.0" y="244" width="320" height="64"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </scrollView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="6ed-Wv-JdZ">
+                            <rect key="frame" x="284" y="22" width="30" height="37"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" image="icon_Speak.png">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="taskSpeackAction:" destination="-1" eventType="touchUpInside" id="IE4-dd-PwK"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="jhY-rS-5a9">
+                            <rect key="frame" x="284" y="69" width="30" height="32"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" image="icon_Speak.png">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="taskSummaryAction:" destination="-1" eventType="touchUpInside" id="V6M-gH-3QT"/>
+                            </connections>
+                        </button>
+                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" id="9yV-aR-Lj1">
+                            <rect key="frame" x="289" y="30" width="20" height="20"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        </activityIndicatorView>
+                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" id="zpK-AF-Ixq">
+                            <rect key="frame" x="289" y="74" width="20" height="20"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        </activityIndicatorView>
+                        <view contentMode="scaleToFill" id="yrI-QT-q91" customClass="HPGrowingTextView">
+                            <rect key="frame" x="10" y="61" width="271" height="30"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="blue_placeholder.png" id="aex-51-MOJ">
+                                    <rect key="frame" x="0.0" y="21" width="271" height="9"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </view>
+                        <view contentMode="scaleToFill" id="EO1-qG-1xr">
+                            <rect key="frame" x="0.0" y="309" width="320" height="234"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" style="plain" separatorStyle="none" rowHeight="50" sectionHeaderHeight="22" sectionFooterHeight="22" id="ood-bh-sQX">
+                                    <rect key="frame" x="13" y="3" width="295" height="168"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <connections>
+                                        <outlet property="dataSource" destination="-1" id="jtb-Au-pWm"/>
+                                        <outlet property="delegate" destination="-1" id="weS-Au-tbO"/>
+                                    </connections>
+                                </tableView>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ysB-1F-67d">
+                                    <rect key="frame" x="12" y="177" width="171" height="34"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                    <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <state key="normal" title="Set auto reminder(s)" image="reminderBell.png">
+                                        <color key="titleColor" red="0.11372549830000001" green="0.60000002379999995" blue="0.79215693470000004" alpha="1" colorSpace="deviceRGB"/>
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="selected" image="reminderBell.png"/>
+                                    <connections>
+                                        <action selector="setReminderAction:" destination="-1" eventType="touchUpInside" id="QfY-eg-2fu"/>
+                                    </connections>
+                                </button>
+                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="HnU-SA-CTO">
+                                    <rect key="frame" x="195" y="182" width="24" height="24"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" image="cross.png">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="removeReminderAction:" destination="-1" eventType="touchUpInside" id="Q6V-MJ-LVv"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </view>
+                    </subviews>
+                </scrollView>
+            </subviews>
+            <color key="backgroundColor" red="0.96775350765306123" green="0.96775350765306123" blue="0.96775350765306123" alpha="1" colorSpace="calibratedRGB"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="blue_placeholder.png" width="14" height="7"/>
+        <image name="cross.png" width="10" height="10"/>
+        <image name="icon_Speak.png" width="24" height="24"/>
+        <image name="reminderBell.png" width="24" height="24"/>
+        <image name="task_Attachment.png" width="16" height="16"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>
