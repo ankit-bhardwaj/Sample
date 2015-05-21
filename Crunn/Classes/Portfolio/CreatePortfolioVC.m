@@ -484,6 +484,7 @@
     }
     else
     {
+        [MBProgressHUD hideAllHUDsForView:self.navigationController.view animated:YES];
         UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"" message:(NSString*)sender delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
     }
@@ -636,6 +637,7 @@
     }
     else
     {
+        [MBProgressHUD hideAllHUDsForView:self.navigationController.view animated:YES];
         UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"" message:(NSString*)sender delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
     }

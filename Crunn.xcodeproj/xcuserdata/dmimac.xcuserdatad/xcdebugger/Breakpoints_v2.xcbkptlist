@@ -127,7 +127,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "905"
             endingLineNumber = "905"
-            landmarkName = "-ChangeFollowTask:follow:"
+            landmarkName = "-jsonStringFormDate:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -154,12 +154,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Crunn/Classes/menu/HomeVC.m"
-            timestampString = "451044139.398949"
+            timestampString = "451937499.386208"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1363"
-            endingLineNumber = "1363"
-            landmarkName = "-openTaskMenu:"
+            startingLineNumber = "1367"
+            endingLineNumber = "1367"
+            landmarkName = "-didReceiveMemoryWarning"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -256,22 +256,6 @@
             startingLineNumber = "200"
             endingLineNumber = "200"
             landmarkName = "-touchesMoved:withEvent:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Crunn/Classes/Portfolio/CreatePortfolioVC.m"
-            timestampString = "450058887.373305"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "555"
-            endingLineNumber = "555"
-            landmarkName = "-createProjectSuccess:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

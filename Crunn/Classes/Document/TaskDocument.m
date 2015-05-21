@@ -110,6 +110,7 @@ static TaskDocument* _sharedInstance = nil;
     if(_homeFeedOp)
         return;
     
+    [self.searchCriteria removeAllObjects];
     self.closedTask = NO;
     if(portfolio == nil)
         self.sortCategory = [TaskSortCategory deafultTaskSortCategory];
@@ -138,21 +139,82 @@ static TaskDocument* _sharedInstance = nil;
     
     _homeFeedIndex++;
     User* user = [User currentUser];
-    NSString* path = [NSString stringWithFormat:@"%@/Task.svc/GetTasks",BASE_SERVER_PATH];
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:path]];
-
-    NSMutableDictionary* jsonDictionary = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",user.UserId], @"userId", SESSION_KEY,@"sessionId",self.sortCategory.SortByColumnScript,@"taskSortBy",@"Home",@"listCategory",[NSNumber numberWithBool:self.closedTask],@"closedTask",[NSNumber numberWithInt:_homeFeedIndex],@"pageNumber",[NSNumber numberWithInt:10],@"pageSize",[NSNumber numberWithInt:3],@"commentCount",nil];
-    
-    if(self.selectedProject)
-        [jsonDictionary setObject:[NSString stringWithFormat:@"%ld",self.selectedProject.ProjectId] forKey:@"projectId"];
-    
-    if(self.selectedPortfolio)
-        [jsonDictionary setObject:[NSString stringWithFormat:@"%ld",self.selectedPortfolio.PortfolioId] forKey:@"portfolioId"];
-    
-    // Encode the message in JSON
-    NSError *jsonError = nil;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonDictionary options:0 error:&jsonError];
+    NSData *jsonData;
+    NSMutableURLRequest *request;
+    if(self.searchCriteria.count == 0)
+    {
+        NSString* path = [NSString stringWithFormat:@"%@/Task.svc/GetTasks",BASE_SERVER_PATH];
+        
+        request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:path]];
+        
+        NSMutableDictionary* jsonDictionary = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",user.UserId], @"userId", SESSION_KEY,@"sessionId",self.sortCategory.SortByColumnScript,@"taskSortBy",@"Home",@"listCategory",[NSNumber numberWithBool:self.closedTask],@"closedTask",[NSNumber numberWithInt:_homeFeedIndex],@"pageNumber",[NSNumber numberWithInt:10],@"pageSize",[NSNumber numberWithInt:3],@"commentCount",nil];
+        
+        if(self.selectedProject)
+            [jsonDictionary setObject:[NSString stringWithFormat:@"%ld",self.selectedProject.ProjectId] forKey:@"projectId"];
+        
+        if(self.selectedPortfolio)
+            [jsonDictionary setObject:[NSString stringWithFormat:@"%ld",self.selectedPortfolio.PortfolioId] forKey:@"portfolioId"];
+        
+        // Encode the message in JSON
+        NSError *jsonError = nil;
+        jsonData = [NSJSONSerialization dataWithJSONObject:jsonDictionary options:0 error:&jsonError];
+    }
+    else
+    {
+        NSString* path = [NSString stringWithFormat:@"%@/Search.svc/SearchTasks",BASE_SERVER_PATH];
+        
+        request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:path]];
+        
+        NSString* searchTerm = [self.searchCriteria objectForKey:@"searchKey"];
+        //NSString* wordTerm = [self.searchCriteria objectForKey:@"wordKey"];
+        NSArray* assignees = [self.searchCriteria objectForKey:@"assignee"];
+        NSArray* creators = [self.searchCriteria objectForKey:@"creators"];
+        NSArray* portfolios = [self.searchCriteria objectForKey:@"portfolios"];
+        NSArray* projects = [self.searchCriteria objectForKey:@"project"];
+        NSString* taskStatus = [self.searchCriteria objectForKey:@"includeDoneTask"];
+        NSMutableString* assigneeTerms = [NSMutableString string];
+        NSMutableString* creatorsTerms = [NSMutableString string];
+        NSMutableString* portfolioTerms = [NSMutableString string];
+        NSMutableString* projectTerms = [NSMutableString string];
+        
+        for(User* p in assignees)
+        {
+            if([assigneeTerms length] > 0)
+                [assigneeTerms appendString:@","];
+            [assigneeTerms appendFormat:@"%d",p.UserId];
+        }
+        for(User* p in creators)
+        {
+            if([creatorsTerms length] > 0)
+                [creatorsTerms appendString:@","];
+            [creatorsTerms appendFormat:@"%d",p.UserId];
+        }
+        
+        for(Portfolio* p in portfolios)
+        {
+            if([portfolioTerms length] > 0)
+                [portfolioTerms appendString:@","];
+            [portfolioTerms appendFormat:@"%ld",(long)p.PortfolioId];
+        }
+        
+        for(Project* p in projects)
+        {
+            if([projectTerms length] > 0)
+                [projectTerms appendString:@","];
+            [projectTerms appendFormat:@"%lu",(unsigned long)p.ProjectId];
+        }
+        
+        
+        NSMutableDictionary* searchDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[NSNull null], @"DueDays", @"N",@"Attachment",[NSNull null],@"SearchText",assigneeTerms,@"assignee",creatorsTerms,@"CreatedBy",[NSNull null],@"EndDueDate",taskStatus,@"TaskStatus",searchTerm,@"TxtSearchText",projectTerms,@"InProject",[NSNull null],@"StartDueDate",portfolioTerms,@"InPortfolio", nil];
+        
+        NSMutableDictionary* jsonDictionary = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",user.UserId], @"LogInUserId", SESSION_KEY,@"SessionId",searchDict,@"SearchCriteria",[NSNumber numberWithInt:_homeFeedIndex],@"PageNumber",[NSNumber numberWithInt:10],@"PageSize",[NSNumber numberWithInt:3],@"CommentCount",nil];
+        
+        
+        // Encode the message in JSON
+        NSError *jsonError = nil;
+        jsonData = [NSJSONSerialization dataWithJSONObject:[NSDictionary dictionaryWithObject:jsonDictionary forKey:@"msgIn"] options:0 error:&jsonError];
+    }
     
     NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[jsonData length]];
     
@@ -189,9 +251,10 @@ static TaskDocument* _sharedInstance = nil;
     
     _homeFeedIndex++;
     User* user = [User currentUser];
+    
     NSString* path = [NSString stringWithFormat:@"%@/Search.svc/SearchTasks",BASE_SERVER_PATH];
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:path]];
+    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:path]];
     
     NSString* searchTerm = [self.searchCriteria objectForKey:@"searchKey"];
     NSString* wordTerm = [self.searchCriteria objectForKey:@"wordKey"];
@@ -204,7 +267,7 @@ static TaskDocument* _sharedInstance = nil;
     NSMutableString* creatorsTerms = [NSMutableString string];
     NSMutableString* portfolioTerms = [NSMutableString string];
     NSMutableString* projectTerms = [NSMutableString string];
-
+    
     for(User* p in assignees)
     {
         if([assigneeTerms length] > 0)
@@ -217,31 +280,30 @@ static TaskDocument* _sharedInstance = nil;
             [creatorsTerms appendString:@","];
         [creatorsTerms appendFormat:@"%d",p.UserId];
     }
-
+    
     for(Portfolio* p in portfolios)
     {
         if([portfolioTerms length] > 0)
             [portfolioTerms appendString:@","];
         [portfolioTerms appendFormat:@"%ld",(long)p.PortfolioId];
     }
-
+    
     for(Project* p in projects)
     {
         if([projectTerms length] > 0)
             [projectTerms appendString:@","];
         [projectTerms appendFormat:@"%lu",(unsigned long)p.ProjectId];
     }
-
     
-    NSMutableDictionary* searchDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[NSNull null], @"DueDays", @"N",@"Attachment",searchTerm,@"SearchText",assigneeTerms,@"assignee",creatorsTerms,@"CreatedBy",[NSNull null],@"EndDueDate",taskStatus,@"TaskStatus",@"",@"TxtSearchText",projectTerms,@"InProject",[NSNull null],@"StartDueDate",portfolioTerms,@"InPortfolio", nil];
+    
+    NSMutableDictionary* searchDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[NSNull null], @"DueDays", @"N",@"Attachment",[NSNull null],@"SearchText",assigneeTerms,@"assignee",creatorsTerms,@"CreatedBy",[NSNull null],@"EndDueDate",taskStatus,@"TaskStatus",searchTerm,@"TxtSearchText",projectTerms,@"InProject",[NSNull null],@"StartDueDate",portfolioTerms,@"InPortfolio", nil];
     
     NSMutableDictionary* jsonDictionary = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",user.UserId], @"LogInUserId", SESSION_KEY,@"SessionId",searchDict,@"SearchCriteria",[NSNumber numberWithInt:_homeFeedIndex],@"PageNumber",[NSNumber numberWithInt:10],@"PageSize",[NSNumber numberWithInt:3],@"CommentCount",nil];
     
     
     // Encode the message in JSON
     NSError *jsonError = nil;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[NSDictionary dictionaryWithObject:jsonDictionary forKey:@"msgIn"] options:0 error:&jsonError];
-    
+    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:[NSDictionary dictionaryWithObject:jsonDictionary forKey:@"msgIn"] options:0 error:&jsonError];
     NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[jsonData length]];
     
     [request setHTTPMethod:@"POST"];
@@ -1362,7 +1424,7 @@ static TaskDocument* _sharedInstance = nil;
             
             NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:dataObj options:NSJSONReadingMutableContainers error:NULL];
             NSArray* result = [dict objectForKey:@"GetTasksResult"];
-            if(self.searchCriteria)
+            if(!result)
                 result = [dict objectForKey:@"SearchTasksResult"];
             
             if(result && [result isKindOfClass:[NSArray class]])

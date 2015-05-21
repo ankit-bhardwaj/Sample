@@ -21,6 +21,14 @@
     
     CLTokenInputView* _currentInputView;
     
+    CLTokenInputView* _assigneeInputView;
+    
+    CLTokenInputView* _creatorInputView;
+    
+    CLTokenInputView* _portfolioInputView;
+    
+    CLTokenInputView* _projectInputView;
+    
     NSString* _searchKeyword;
     NSString* _wordKeyword;
 }
@@ -56,6 +64,19 @@
     _selectedCreators = [NSMutableArray new];
     _selectedPortfolios = [NSMutableArray new];
     _selectedProjects = [NSMutableArray new];
+    
+    NSMutableDictionary* d = [TaskDocument sharedInstance].searchCriteria;
+    if(d.count)
+    {
+        _searchKeyword = [d objectForKey:@"searchKey"];
+        _wordKeyword = [d objectForKey:@"wordKey"];
+        [_selectedAssginee addObjectsFromArray:[d objectForKey:@"assignee"]];
+        [_selectedCreators addObjectsFromArray: [d objectForKey:@"creators"]];
+        [_selectedPortfolios addObjectsFromArray: [d objectForKey:@"portfolios"]];
+        [_selectedProjects addObjectsFromArray: [d objectForKey:@"project"]];
+        
+        includeCompBtn.selected = [[d objectForKey:@"searchKey"] boolValue];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -301,7 +322,13 @@
 - (void)tokenInputView:(CLTokenInputView *)view didChangeHeightTo:(CGFloat)height
 {
     if(view.tag != 0)
+    {
+        [tableView beginUpdates];
         [tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+        [tableView endUpdates];
+        if(![view isEditing])
+            [view beginEditing];
+    }
 }
 
 
@@ -368,55 +395,19 @@
         switch (indexPath.row) {
             case 2:
             {
-                NSMutableString* string = [NSMutableString string];
-                for(User* matching in self.selectedAssginee) {
-                    [string appendString:matching.FormattedName];
-                    [string appendString:@", "];
-                }
-                NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-                paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-                NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:17.0],NSParagraphStyleAttributeName:paragraphStyle};
-                CGRect size = [string boundingRectWithSize:CGSizeMake(tableView.bounds.size.width-100, FLT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attributes context:nil];
-                return MAX(60.0, size.size.height+30);
+                return MAX(60.0, _assigneeInputView.frame.size.height +30);
             }
             case 3:
             {
-                NSMutableString* string = [NSMutableString string];
-                for(User* matching in self.selectedCreators) {
-                    [string appendString:matching.FormattedName];
-                    [string appendString:@", "];
-                }
-                NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-                paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-                NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:17.0],NSParagraphStyleAttributeName:paragraphStyle};
-                CGRect size = [string boundingRectWithSize:CGSizeMake(tableView.bounds.size.width-100, FLT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attributes context:nil];
-                return MAX(60.0, size.size.height+30);
+                return MAX(60.0, _creatorInputView.frame.size.height +30);
             }
             case 4:
             {
-                NSMutableString* string = [NSMutableString string];
-                for(Portfolio* matching in self.selectedPortfolios) {
-                    [string appendString:matching.PortfolioName];
-                    [string appendString:@", "];
-                }
-                NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-                paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-                NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:17.0],NSParagraphStyleAttributeName:paragraphStyle};
-                CGRect size = [string boundingRectWithSize:CGSizeMake(tableView.bounds.size.width-100, FLT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attributes context:nil];
-                return MAX(60.0, size.size.height+30);
+                return MAX(60.0, _portfolioInputView.frame.size.height +30);
             }
             case 5:
             {
-                NSMutableString* string = [NSMutableString string];
-                for(Project* matching in self.selectedProjects) {
-                    [string appendString:matching.ProjectName];
-                    [string appendString:@", "];
-                }
-                NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-                paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-                NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:17.0],NSParagraphStyleAttributeName:paragraphStyle};
-                CGRect size = [string boundingRectWithSize:CGSizeMake(tableView.bounds.size.width-100, FLT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attributes context:nil];
-                return MAX(60.0, size.size.height+30);
+                return MAX(60.0, _projectInputView.frame.size.height +30);
             }
         }
         return 60.0;
@@ -479,89 +470,62 @@
             }
             case 2:
             {
-                CLTokenInputView* txt = [self createCLTokenInputView];
-                CGRect rect = txt.frame;
-                NSMutableString* string = [NSMutableString string];
-                for(User* matching in self.selectedAssginee) {
-                    [string appendString:matching.FormattedName];
-                    [string appendString:@", "];
-                    CLToken *match = [[CLToken alloc] initWithDisplayText:matching.FormattedName context:matching];
-                    [txt addToken:match];
+                if(!_assigneeInputView)
+                {
+                    _assigneeInputView = [self createCLTokenInputView];
+                    _assigneeInputView.placeholderText = @"Assigned to...";
+                    for(User* matching in self.selectedAssginee) {
+                        CLToken *match = [[CLToken alloc] initWithDisplayText:matching.FormattedName context:matching];
+                        [_assigneeInputView addToken:match];
+                    }
+                    _assigneeInputView.tag = 1000+indexPath.row;
                 }
-                NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-                paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-                NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:17.0],NSParagraphStyleAttributeName:paragraphStyle};
-                CGRect size = [string boundingRectWithSize:CGSizeMake(rect.size.width, FLT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attributes context:nil];
-                rect.size.height = MAX(34, size.size.height);
-                [txt setFrame:rect];
-                txt.tag = 1000+indexPath.row;
-                txt.placeholderText = @"Assigned to...";
-                [cell.contentView addSubview:txt];
+                [cell.contentView addSubview:_assigneeInputView];
                 break;
             }
             case 3:
             {
-                CLTokenInputView* txt = [self createCLTokenInputView];
-                CGRect rect = txt.frame;
-                NSMutableString* string = [NSMutableString string];
-                for(User* matching in self.selectedCreators) {
-                    [string appendString:matching.FormattedName];
-                    [string appendString:@", "];
-                    CLToken *match = [[CLToken alloc] initWithDisplayText:matching.FormattedName context:matching];
-                    [txt addToken:match];
+                if(!_creatorInputView)
+                {
+                    _creatorInputView = [self createCLTokenInputView];
+                    _creatorInputView.placeholderText = @"Created by...";
+                    for(User* matching in self.selectedCreators) {
+                        CLToken *match = [[CLToken alloc] initWithDisplayText:matching.FormattedName context:matching];
+                        [_creatorInputView addToken:match];
+                    }
+                    _creatorInputView.tag = 1000+indexPath.row;
                 }
-                NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-                paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-                NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:17.0],NSParagraphStyleAttributeName:paragraphStyle};
-                CGRect size = [string boundingRectWithSize:CGSizeMake(rect.size.width, FLT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attributes context:nil];
-                rect.size.height = MAX(34, size.size.height);
-                [txt setFrame:rect];
-                txt.tag = 1000+indexPath.row;
-                txt.placeholderText = @"Created by...";
-                [cell.contentView addSubview:txt];
+                [cell.contentView addSubview:_creatorInputView];
                 break;
             }
             case 4:
             {
-                CLTokenInputView* txt = [self createCLTokenInputView];
-                CGRect rect = txt.frame;
-                NSMutableString* string = [NSMutableString string];
-                for(Portfolio* matching in self.selectedPortfolios) {
-                    [string appendString:matching.PortfolioName];
-                    [string appendString:@", "];
-                    CLToken *match = [[CLToken alloc] initWithDisplayText:matching.PortfolioName context:matching];
-                    [txt addToken:match];
+                if(!_portfolioInputView)
+                {
+                    _portfolioInputView = [self createCLTokenInputView];
+                    _portfolioInputView.placeholderText = @"In portfolio...";
+                    for(Portfolio* matching in self.selectedPortfolios) {
+                        CLToken *match = [[CLToken alloc] initWithDisplayText:matching.PortfolioName context:matching];
+                        [_portfolioInputView addToken:match];
+                    }
+                    _portfolioInputView.tag = 1000+indexPath.row;
                 }
-                NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-                paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-                NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:17.0],NSParagraphStyleAttributeName:paragraphStyle};
-                CGRect size = [string boundingRectWithSize:CGSizeMake(rect.size.width, FLT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attributes context:nil];
-                rect.size.height = MAX(34, size.size.height);
-                [txt setFrame:rect];
-                txt.tag = 1000+indexPath.row;
-                txt.placeholderText = @"In portfolio...";
-                [cell.contentView addSubview:txt];
+                [cell.contentView addSubview:_portfolioInputView];
                 break;
             }
             case 5:
             {
-                CLTokenInputView* txt = [self createCLTokenInputView];
-                CGRect rect = txt.frame;
-                NSMutableString* string = [NSMutableString string];
-                for(Project* matching in self.selectedProjects) {
-                    [string appendString:matching.ProjectName];
-                    [string appendString:@", "];
-                    CLToken *match = [[CLToken alloc] initWithDisplayText:matching.ProjectName context:matching];
-                    [txt addToken:match];
+                if(!_projectInputView)
+                {
+                    _projectInputView = [self createCLTokenInputView];
+                    _projectInputView.placeholderText = @" In projects...";
+                    for(Project* matching in self.selectedProjects) {
+                        CLToken *match = [[CLToken alloc] initWithDisplayText:matching.ProjectName context:matching];
+                        [_projectInputView addToken:match];
+                    }
+                    _projectInputView.tag = 1000+indexPath.row;
                 }
-                NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-                paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-                NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:17.0],NSParagraphStyleAttributeName:paragraphStyle};
-                CGRect size = [string boundingRectWithSize:CGSizeMake(rect.size.width, FLT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attributes context:nil];
-                rect.size.height = MAX(34, size.size.height);
-                [txt setFrame:rect];                txt.tag = 1000+indexPath.row;
-                txt.placeholderText = @" In projects...";
-                [cell.contentView addSubview:txt];
+                [cell.contentView addSubview:_projectInputView];
                 break;
             }
             case 6:
@@ -736,12 +700,12 @@
     [d setObject:self.selectedCreators forKey:@"creators"];
     [d setObject:self.selectedPortfolios forKey:@"portfolios"];
     [d setObject:self.selectedProjects forKey:@"project"];
-    [d setObject:includeCompBtn.selected?@"1":@"0" forKey:@"includeDoneTask"];
+    [d setObject:includeCompBtn.selected?@"0":@"1" forKey:@"includeDoneTask"];
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getHomeFeedCallBackCallBack:) name:@"HomeFeedNotifier" object:nil];
     [[TaskDocument sharedInstance] setSearchCriteria:d];
-    [[TaskDocument sharedInstance] refreshSearchFeed];
+    [[TaskDocument sharedInstance] refreshHomeFeed];
 }
 
 - (void)getHomeFeedCallBackCallBack:(NSNotification*)note
@@ -752,7 +716,8 @@
 - (void)reloadView:(NSArray*)tmp
 {
     [MBProgressHUD hideHUDForView:self.view animated:YES];
-    [self.popOver dismissPopoverAnimated:YES];
+    if(tmp && [tmp isKindOfClass:[NSArray class]])
+        [self.popOver dismissPopoverAnimated:YES];
 }
 
 

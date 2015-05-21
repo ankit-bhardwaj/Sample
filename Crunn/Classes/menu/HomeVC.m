@@ -136,8 +136,11 @@
     
     [self.view addSubview:portfolioOptionsView];
     [self.view addSubview:projectOptionsView];
+    [self.view bringSubviewToFront:floatingView];
+    
     projectOptionsView.hidden = YES;
     portfolioOptionsView.hidden = YES;
+    floatingView.hidden = NO;
     
     portfolioOptionsContentView.layer.cornerRadius = 5.0;
     portfolioOptionsContentView.layer.borderColor = [UIColor lightGrayColor].CGColor;
@@ -327,7 +330,7 @@
             [tblView reloadData];
         }
     }
-    if(!_taskFeeds.count || ![tmp isKindOfClass:[NSArray class]])
+    if(_taskFeeds.count == 0 || ![tmp isKindOfClass:[NSArray class]])
     {
         [_getFooterView setState:TableFooterNoData];
 
@@ -340,6 +343,10 @@
         {
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getPortfolioCallBack:) name:@"GetPortfolioNotifier" object:nil];
             [[TaskDocument sharedInstance] getPortfolio:[TaskDocument sharedInstance].selectedPortfolio];
+        }
+        else
+        {
+            [tblView reloadData];
         }
     }
     else if(!tmp || tmp.count ==0)
@@ -410,6 +417,7 @@
             managePortfolioUserBtn.hidden = YES;
             [tblView setTableFooterView:nil];
             portfolioOptionsView.hidden = NO;
+            floatingView.hidden = YES;
             if([TaskDocument sharedInstance].selectedPortfolio.CurrentUserCanAddProject)
             {
                 createProjectBtn.hidden = NO;
