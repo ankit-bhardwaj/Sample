@@ -44,7 +44,6 @@
 @property (strong, nonatomic) NSMutableArray *selectedProjects;
 
 @property (strong, nonatomic) NSArray *filteredPortfolios;
-@property (strong, nonatomic) NSArray *portfolios;
 @property (strong, nonatomic) NSMutableArray *selectedPortfolios;
 
 - (IBAction)toogleIncludeDoneTasks:(UIButton*)btn;
@@ -161,6 +160,7 @@
         CGRect r = [tableView rectForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
         CGRect rect = filteredTableView.frame;
         rect.origin.y  = r.origin.y + _currentInputView.frame.size.height - tableView.contentOffset.y + 20;
+        rect.size.height = tableView.bounds.size.height - rect.origin.y;
         [filteredTableView setFrame:rect];
         switch ( index){
             case 2:

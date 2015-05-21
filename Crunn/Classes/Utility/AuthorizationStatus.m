@@ -113,13 +113,58 @@
 
 + (BOOL)isMicroPhoneAllowedWithMessage:(BOOL)showAlert
 {
-    __block BOOL access = NO;
-    while (access) {
-       [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+    if([[[UIDevice currentDevice] systemVersion] floatValue] >= 8)
+    {
+        [[AVAudioSession sharedInstance] setActive:YES error:nil];
+        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryRecord error:nil];
+        AVAudioSessionRecordPermission status = [[AVAudioSession sharedInstance]recordPermission];
+        switch (status)
+        {
+            case AVAudioSessionRecordPermissionUndetermined:
+            {
+                __block BOOL access = NO;
+                __block BOOL done = NO;
+                while (done) {
+                    [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+                }
+                
+                [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
+                    access = granted;
+                    done = YES;
+                }];
+                return access;
+            }
+            case AVAudioSessionRecordPermissionDenied:
+            {
+                if(showAlert)
+                    [[[UIAlertView alloc] initWithTitle:@"" message:@"Access of recording has been denied. Please allow from privacy settings" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                return NO;
+                // Tell user access has previously been denied
+            }
+                
+            case AVAudioSessionRecordPermissionGranted:
+                return YES;
+        }
+        return NO;
     }
-    [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
-        access = granted;
-    }];
-    return access;
+    else
+    {
+        __block BOOL access = NO;
+        __block BOOL done = NO;
+        while (done) {
+            [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+        }
+        [[AVAudioSession sharedInstance] setActive:YES error:nil];
+        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryRecord error:nil];
+        [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
+            access = granted;
+            if(!granted && showAlert)
+            {
+                [[[UIAlertView alloc] initWithTitle:@"" message:@"Access of recording has been denied. Please allow from privacy settings" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            }
+            done = YES;
+        }];
+        return access;
+    }
 }
 @end
