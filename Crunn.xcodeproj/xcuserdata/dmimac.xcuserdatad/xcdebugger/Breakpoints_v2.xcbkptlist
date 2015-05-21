@@ -15,7 +15,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "393"
             endingLineNumber = "393"
-            landmarkName = "-collapseExpandAction:"
+            landmarkName = "-taskStatusChange:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -122,12 +122,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Crunn/Classes/Document/TaskDocument.m"
-            timestampString = "436606063.873397"
+            timestampString = "451527022.900079"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "845"
-            endingLineNumber = "845"
-            landmarkName = "-deleteTask:"
+            startingLineNumber = "905"
+            endingLineNumber = "905"
+            landmarkName = "-ChangeFollowTask:follow:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -272,6 +272,38 @@
             startingLineNumber = "555"
             endingLineNumber = "555"
             landmarkName = "-createProjectSuccess:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Crunn/Classes/menu/TaskFilterVC.m"
+            timestampString = "451528609.017269"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "303"
+            endingLineNumber = "303"
+            landmarkName = "-tokenInputView:didChangeHeightTo:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Crunn/Classes/menu/TaskFilterVC.m"
+            timestampString = "451529552.479064"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "193"
+            endingLineNumber = "193"
+            landmarkName = "-tokenInputView:didAddToken:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

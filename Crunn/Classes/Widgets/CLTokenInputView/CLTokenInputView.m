@@ -19,7 +19,7 @@ static CGFloat const PADDING_TOP = 0.0;
 static CGFloat const PADDING_BOTTOM = 0.0;
 static CGFloat const PADDING_LEFT = 0.0;
 static CGFloat const PADDING_RIGHT = 0.0;
-static CGFloat const STANDARD_ROW_HEIGHT = 25.0;
+static CGFloat const STANDARD_ROW_HEIGHT = 34.0;
 
 static CGFloat const FIELD_MARGIN_X = 4.0; // Note: Same as CLTokenView.PADDING_X
 
@@ -98,7 +98,7 @@ static CGFloat const FIELD_MARGIN_X = 4.0; // Note: Same as CLTokenView.PADDING_
 
 - (CGSize)intrinsicContentSize
 {
-    return CGSizeMake(UIViewNoIntrinsicMetric, MAX(45, self.intrinsicContentHeight));
+    return CGSizeMake(UIViewNoIntrinsicMetric, MAX(34, self.intrinsicContentHeight));
 }
 
 
@@ -132,15 +132,17 @@ static CGFloat const FIELD_MARGIN_X = 4.0; // Note: Same as CLTokenView.PADDING_
     [self.tokenViews addObject:tokenView];
     [self addSubview:tokenView];
     self.textField.text = @"";
+    
     if ([self.delegate respondsToSelector:@selector(tokenInputView:didAddToken:)]) {
         [self.delegate tokenInputView:self didAddToken:token];
     }
-
     // Clearing text programmatically doesn't call this automatically
     [self onTextFieldDidChange:self.textField];
 
     [self updatePlaceholderTextVisibility];
     [self repositionViews];
+    
+   
 }
 
 - (void)removeToken:(CLToken *)token
@@ -279,7 +281,7 @@ static CGFloat const FIELD_MARGIN_X = 4.0; // Note: Same as CLTokenView.PADDING_
     self.intrinsicContentHeight = CGRectGetMaxY(textFieldRect)+PADDING_BOTTOM;
     [self invalidateIntrinsicContentSize];
     CGRect r = self.frame;
-    r.size.height = self.intrinsicContentHeight;
+    r.size.height = self.intrinsicContentSize.height;
     [self setFrame:r];
 
     CGRect rect = self.bottomImageView.frame;

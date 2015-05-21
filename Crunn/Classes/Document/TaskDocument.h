@@ -41,6 +41,7 @@
 @property(nonatomic,assign)NSInteger        editingComment;
 @property(nonatomic,retain)NSMutableArray*  allABContacts;
 @property(nonatomic,assign)BOOL             hasJustCreatedPortfolio;
+@property(nonatomic,retain)NSMutableDictionary*  searchCriteria;
 
 +(TaskDocument*)sharedInstance;
 
@@ -98,4 +99,7 @@
 - (void)requestForABAccess;
 -(NSArray *)contactsContainingEmail:(NSString *)email;
 -(NSArray *)getAllABContacts;
+
+- (void)refreshSearchFeed;
+- (void)getSearchFeed;
 @end
